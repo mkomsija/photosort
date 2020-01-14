@@ -8,16 +8,15 @@
 #   - complex type or class
 #
 # Created by:  Mihajlo Karlicic
-# Created on:  10.01.2020 
+# Created on:  10.01.2020
+# Modified on: 14.01.2020
 # -----------------------------------------------------------
 
 import os                                               # for file manipulation
 from datetime import datetime                           # for date format conversion
 import shutil                                           # for copying files
 
-s_source_path = r"source-path"
-s_dest_path = r"destination-path"
-
+s_dest_path = ""
 # month folder names list - currently in Serbian
 MONTHS = ["01 - Januar",
           "02 - Februar",
@@ -64,18 +63,15 @@ def enter_subfolder(entry):
     
 
 # safely open folder and process it
-try:
+def start_sorting(s_source_path, s_dest_path_ext):
+    global s_dest_path
+    s_dest_path = s_dest_path_ext
     with os.scandir(s_source_path) as start_folder:
-        print("Started sorting files.")
         for entry in start_folder:
             if entry.is_dir():
-                enter_subfolder(entry)
+                 enter_subfolder(entry)
             elif entry.is_file():
-                sort_file(entry)
+                 sort_file(entry)
             else:
-                pass                    # we should never get here
-    print("Done!")
-except FileNotFoundError:
-    print("Folder path error!")
-    input()
+                 pass                    # we should never get here
 
